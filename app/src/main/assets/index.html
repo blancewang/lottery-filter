@@ -84,7 +84,7 @@ body{margin:0;background:var(--bg);color:var(--text);font:12px/1.45 -apple-syste
       <button type="button" class="action" id="modePool">候选模式</button>
     </div>
     <div class="numpad poolPad" id="redPad"></div>
-    <div class="row" style="margin-top:8px;border:0"><span class="ruleName">胆至少</span><input class="pickInput" id="danMin" type="number" value="1" min="0" max="6" style="cursor:text"></div>
+    <div class="row" style="margin-top:8px;border:0"><span class="ruleName">胆至少</span><input class="pickInput" id="danMin" type="number" value="0" min="0" max="6" style="cursor:text"></div>
     <div class="summary" id="poolSum"></div>
   </div>
   <div class="card">
@@ -630,10 +630,26 @@ document.getElementById('run').onclick=function(){
       :(`候选红 <b>${n}</b> · C=<b>${cn6}</b> · 蓝 <b>${blue.length}</b> · 需枚举后才能进入投注集`);
     state.lastRed=red.slice(); state.lastBlue=blue.slice(); state.lastPass=doEnum?pass:null;
     state.lastCombos=doEnum?combos:null;
+    const listLimit=100;
+    let listHtml='';
+    if(doEnum&&combos&&combos.length){
+      const show=combos.slice(0,listLimit);
+      const pad=n=>n<10?'0'+n:''+n;
+      listHtml='<div class="hint" style="margin-top:10px;font-weight:600;color:var(--gold)">投注集明细（前'+show.length+'/'+combos.length+'注）</div>';
+      listHtml+='<div class="hint" style="max-height:280px;overflow:auto;background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:8px;margin-top:6px;white-space:pre-wrap;font-size:12px;line-height:1.65">';
+      listHtml+=show.map((c,i)=>((i+1)+'. '+c.map(pad).join(' '))).join('\n');
+      if(combos.length>listLimit) listHtml+='\n…共 '+combos.length+' 注，仅显示前 '+listLimit+' 注';
+      listHtml+='</div>';
+    }else if(doEnum){
+      listHtml='<div class="hint" style="margin-top:8px">本轮无通过注</div>';
+    }else{
+      listHtml='<div class="hint" style="margin-top:8px">未完整枚举时不列出明细（红池≤24或勾选强制枚举后可见）</div>';
+    }
     out.innerHTML=`<div class="msg ok">${note}</div>${tips.length?`<div class="msg warn">${tips.map(t=>'· '+t).join('<br>')}</div>`:''}
       <div style="margin-top:6px">${red.map(x=>`<span class="ball br">${x}</span>`).join('')}</div>
       <div style="margin-top:4px">${blue.map(x=>`<span class="ball bb">${x}</span>`).join('')}</div>
-      <div class="hint" style="margin-top:8px">容错 总${T.total.join('~')} 结构${T.struct.join('~')} 三区${T.zone.join('~')} 012${T.route.join('~')}</div>`;
+      <div class="hint" style="margin-top:8px">容错 总${T.total.join('~')} 结构${T.struct.join('~')} 三区${T.zone.join('~')} 012${T.route.join('~')}</div>
+      ${listHtml}`;
   }catch(e){
     document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('on'));
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
@@ -707,7 +723,6 @@ document.getElementById('btnUseCombos').onclick=function(){
   document.querySelector('.nav button[data-page="struct"]').classList.add('on');
   document.getElementById('struct').classList.add('on');
 };
-if(document.getElementById('btnUsePool')) 
 document.getElementById('btnSaveStage').onclick=function(){
   if(!state.lastRed){ alert('请先过滤'); return; }
   state.stageNo++;

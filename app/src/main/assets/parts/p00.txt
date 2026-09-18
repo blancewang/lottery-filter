@@ -124,7 +124,7 @@ input[type=number]{width:58px}
 </div>
 
 <script>
-/* V3.4 core - full implementation continues in subsequent parts */
+/* CONTINUED IN NEXT PARTS - core state */
 const state={mode:'pool',reds:new Set(),kills:new Set(),dans:new Set(),blues:new Set(),lastCombos:[],stages:[],stageNo:0};
 const MAX_KEEP=25000;
 function $(id){return document.getElementById(id)}

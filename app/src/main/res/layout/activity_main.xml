@@ -18,7 +18,7 @@
         <!-- 杀号 -->
         <EditText
             android:id="@+id/inputKill"
-            android:hint="杀号（用逗号分隔，如：1,2,3）"
+            android:hint="杀号（如：1,2,3）"
             android:layoutwidth="matchparent"
             android:layoutheight="wrapcontent"/>
 
@@ -57,11 +57,19 @@
             android:layoutwidth="matchparent"
             android:layoutheight="wrapcontent"/>
 
+        <!-- 统计 -->
+        <TextView
+            android:id="@+id/outputStats"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
         <!-- 结果 -->
         <TextView
             android:id="@+id/output"
             android:textSize="16sp"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:layoutwidth="matchparent"
             android:layoutheight="wrapcontent"/>
 

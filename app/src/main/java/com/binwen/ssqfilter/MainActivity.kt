@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val inputTolerance = findViewById<EditText>(R.id.inputTolerance)
         val btnRun = findViewById<Button>(R.id.btnRun)
         val output = findViewById<TextView>(R.id.output)
+        val outputStats = findViewById<TextView>(R.id.outputStats)
 
         btnRun.setOnClickListener {
 
@@ -40,9 +41,13 @@ class MainActivity : AppCompatActivity() {
             evaluator.tolerance = tolerance
 
             val result = StringBuilder()
+            var total = 0
+            var passed = 0
 
             for (ticket in enumerator.enumerate(redPool, pools)) {
+                total++
                 if (evaluator.evaluate(ticket)) {
+                    passed++
                     result.append(ticket.reds.joinToString(","))
                     result.append(" + ")
                     result.append(ticket.blue)
@@ -50,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            outputStats.text = "总组合数：$total\n过滤后：$passed"
             output.text = result.toString()
         }
     }

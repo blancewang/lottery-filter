@@ -5,85 +5,80 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>双色球缩水 V3.4</title>
 <style>
-:root{--bg:#0b0f14;--p:#151b24;--p2:#1c2430;--l:#2a3444;--t:#e8eaed;--m:#9aa3b2;--a:#e0a458;--r:#e85d5d;--b:#4a9eff;--ok:#3dd68c}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.4;-webkit-tap-highlight-color:transparent}
-body{padding-bottom:72px}
-.hd{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.96);border-bottom:1px solid var(--l);padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
-.hd h1{font-size:16px;color:var(--a);font-weight:600}
-.hd .s{font-size:11px;color:var(--m)}
-.sec{margin:10px;background:var(--p);border:1px solid var(--l);border-radius:10px;overflow:hidden}
-.sh{padding:10px 12px;background:var(--p2);border-bottom:1px solid var(--l);font-weight:600;font-size:13px}
+html,body{background:#0b0f14;color:#e8eaed;font-family:sans-serif;font-size:14px;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{padding-bottom:76px}
+.hd{position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid #2a3444;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.hd h1{font-size:17px;color:#e0a458}
+.hd span{font-size:11px;color:#9aa3b2}
+.sec{margin:10px;background:#151b24;border:1px solid #2a3444;border-radius:10px}
+.sh{padding:10px 12px;background:#1c2430;border-bottom:1px solid #2a3444;font-weight:600}
 .sb{padding:10px 12px}
-.row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center}
-.btn{background:var(--p2);border:1px solid var(--l);color:var(--t);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;touch-action:manipulation;-webkit-user-select:none}
-.btn:active{opacity:.8}
-.btn.on{border-color:var(--a);color:var(--a)}
-.btn.pri{background:linear-gradient(135deg,#c48a3a,#e0a458);border:none;color:#1a1208;font-weight:600}
-.btn.ok{background:rgba(61,214,140,.12);border-color:var(--ok);color:var(--ok)}
-.pad{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
-.pad.b{grid-template-columns:repeat(8,1fr)}
-.ball{aspect-ratio:1;border-radius:50%;border:1px solid var(--l);background:var(--bg);color:var(--t);font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;touch-action:manipulation}
-.ball.on{background:var(--r);border-color:var(--r);color:#fff;font-weight:600}
-.ball.blu.on{background:var(--b);border-color:var(--b)}
-.ball.kill{background:rgba(232,93,93,.2);border-color:var(--r);color:var(--r);text-decoration:line-through}
-.ball.dan{background:rgba(61,214,140,.2);border-color:var(--ok);color:var(--ok);font-weight:600}
-.hint{font-size:11px;color:var(--m);margin-top:4px}
-.ft{position:fixed;bottom:0;left:0;right:0;background:rgba(11,15,20,.97);border-top:1px solid var(--l);padding:8px 10px;display:flex;gap:8px;z-index:50}
-.ft .btn{flex:1}
-.log{font-family:ui-monospace,monospace;font-size:11px;max-height:160px;overflow:auto;background:var(--bg);padding:8px;border-radius:6px;border:1px solid var(--l);white-space:pre-wrap;margin-top:8px}
-label{font-size:12px;color:var(--m)}
-input[type=number]{width:52px;background:var(--bg);border:1px solid var(--l);color:var(--t);border-radius:6px;padding:5px 6px;font-size:13px}
-.chk{display:flex;align-items:center;gap:4px;font-size:12px;margin:4px 0}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.btn{background:#1c2430;border:1px solid #2a3444;color:#e8eaed;border-radius:8px;padding:10px 14px;font-size:14px;min-height:44px}
+.btn.on{border-color:#e0a458;color:#e0a458}
+.btn.pri{background:#e0a458;border:none;color:#1a1208;font-weight:700;font-size:16px}
+.btn.ok{border-color:#3dd68c;color:#3dd68c}
+.pad{display:flex;flex-wrap:wrap;gap:6px}
+.ball{width:28px;height:28px;border-radius:50%;border:1px solid #2a3444;background:#0b0f14;color:#e8eaed;font-size:12px;text-align:center;line-height:28px}
+.ball.on{background:#e85d5d;border-color:#e85d5d;color:#fff;font-weight:700}
+.ball.blu.on{background:#4a9eff;border-color:#4a9eff}
+.ball.kill{background:#3a2020;border-color:#e85d5d;color:#e85d5d;text-decoration:line-through}
+.ball.dan{background:#1a3a2a;border-color:#3dd68c;color:#3dd68c;font-weight:700}
+.hint{font-size:12px;color:#9aa3b2;margin-top:6px}
+.ft{position:fixed;bottom:0;left:0;right:0;background:#0b0f14;border-top:1px solid #2a3444;padding:10px;z-index:50}
+.ft .btn{width:100%}
+.log{font-size:12px;max-height:140px;overflow:auto;background:#0b0f14;padding:8px;border:1px solid #2a3444;border-radius:6px;margin-top:8px;white-space:pre-wrap}
+input[type=number]{width:56px;background:#0b0f14;border:1px solid #2a3444;color:#e8eaed;border-radius:6px;padding:8px;font-size:14px}
+label{font-size:13px;color:#9aa3b2;margin-right:4px}
 </style>
 </head>
 <body>
 <div class="hd">
-  <div><h1>双色球缩水 V3.4</h1><div class="s">只缩减注数 · 不预测 · 本地</div></div>
+  <div><h1>双色球缩水 V3.4</h1><span>只缩减注数 · 不预测</span></div>
   <button class="btn" type="button" id="btnReset">重置</button>
 </div>
 
 <div class="sec">
-  <div class="sh">红球 · 候选 / 杀号 / 胆码</div>
+  <div class="sh">红球 · 候选/杀号/胆码</div>
   <div class="sb">
     <div class="row">
-      <button class="btn on" type="button" id="mPool" data-m="pool">候选</button>
-      <button class="btn" type="button" id="mKill" data-m="kill">杀号</button>
-      <button class="btn" type="button" id="mDan" data-m="dan">胆码</button>
+      <button class="btn on" type="button" id="mPool">候选</button>
+      <button class="btn" type="button" id="mKill">杀号</button>
+      <button class="btn" type="button" id="mDan">胆码</button>
       <button class="btn" type="button" id="clrRed">清空</button>
     </div>
     <div class="pad" id="redPad"></div>
-    <div class="hint" id="redHint">点号码切换状态</div>
+    <div class="hint" id="redHint">点号码切换</div>
   </div>
 </div>
 
 <div class="sec">
-  <div class="sh">蓝球（可多选）</div>
-  <div class="sb"><div class="pad b" id="bluePad"></div></div>
+  <div class="sh">蓝球</div>
+  <div class="sb"><div class="pad" id="bluePad"></div></div>
 </div>
 
 <div class="sec">
-  <div class="sh">结构条件（区间容错）</div>
+  <div class="sh">条件（勾选启用）</div>
   <div class="sb">
-    <div class="row"><label>和值</label><input type="number" id="sumMin" value="60"><span>~</span><input type="number" id="sumMax" value="140"></div>
-    <div class="row"><label>跨度</label><input type="number" id="spanMin" value="10"><span>~</span><input type="number" id="spanMax" value="32"></div>
-    <div class="row"><label>奇数个数</label><input type="number" id="oddMin" value="1"><span>~</span><input type="number" id="oddMax" value="5"></div>
-    <div class="row"><label>大号(≥17)</label><input type="number" id="bigMin" value="1"><span>~</span><input type="number" id="bigMax" value="5"></div>
-    <div class="chk"><input type="checkbox" id="enSum" checked>启用和值</div>
-    <div class="chk"><input type="checkbox" id="enSpan" checked>启用跨度</div>
-    <div class="chk"><input type="checkbox" id="enOdd" checked>启用奇偶</div>
-    <div class="chk"><input type="checkbox" id="enBig" checked>启用大小</div>
+    <div class="row"><label><input type="checkbox" id="enSum" checked>和值</label>
+      <input type="number" id="sumMin" value="60">~<input type="number" id="sumMax" value="140"></div>
+    <div class="row"><label><input type="checkbox" id="enSpan" checked>跨度</label>
+      <input type="number" id="spanMin" value="10">~<input type="number" id="spanMax" value="32"></div>
+    <div class="row"><label><input type="checkbox" id="enOdd" checked>奇数个</label>
+      <input type="number" id="oddMin" value="1">~<input type="number" id="oddMax" value="5"></div>
+    <div class="row"><label><input type="checkbox" id="enBig" checked>大号个</label>
+      <input type="number" id="bigMin" value="1">~<input type="number" id="bigMax" value="5"></div>
   </div>
 </div>
 
 <div class="sec">
-  <div class="sh">多轮 · 本轮投注集</div>
+  <div class="sh">多轮投注集</div>
   <div class="sb">
     <div class="row">
       <button class="btn ok" type="button" id="btnUse">用本轮投注集</button>
       <button class="btn" type="button" id="btnClrSt">清空轮次</button>
     </div>
-    <div class="hint">过滤后点「用本轮投注集」，下一轮用通过的组合作输入</div>
     <div class="log" id="stageLog">暂无轮次</div>
   </div>
 </div>
@@ -101,122 +96,129 @@ input[type=number]{width:52px;background:var(--bg);border:1px solid var(--l);col
 </div>
 
 <script>
-(function(){
-var S={mode:'pool',reds:new Set(),kills:new Set(),dans:new Set(),blues:new Set(),last:[],stages:[],useCombos:false};
+var mode='pool';
+var reds={},kills={},dans={},blues={};
+var last=[],stages=[],useCombos=false;
 var MAX=25000;
+
 function $(id){return document.getElementById(id)}
 function n2(n){return n<10?'0'+n:''+n}
+function has(o,n){return o[n]===1}
+function toggle(o,n){if(o[n])delete o[n];else o[n]=1}
+function keys(o){var a=[];for(var k in o)if(o.hasOwnProperty(k))a.push(+k);return a.sort(function(x,y){return x-y})}
+function count(o){var c=0;for(var k in o)if(o.hasOwnProperty(k))c++;return c}
 
 function render(){
   var rp=$('redPad');rp.innerHTML='';
   for(var i=1;i<=33;i++){
-    var d=document.createElement('div');d.className='ball';d.textContent=n2(i);d.dataset.n=i;
-    if(S.kills.has(i))d.classList.add('kill');
-    else if(S.dans.has(i))d.classList.add('dan');
-    else if(S.reds.has(i))d.classList.add('on');
+    var d=document.createElement('div');
+    d.className='ball';
+    d.innerHTML=n2(i);
+    d.setAttribute('data-n',i);
+    if(has(kills,i))d.className+=' kill';
+    else if(has(dans,i))d.className+=' dan';
+    else if(has(reds,i))d.className+=' on';
+    d.onclick=(function(nn){return function(){onRed(nn)}})(i);
     rp.appendChild(d);
   }
   var bp=$('bluePad');bp.innerHTML='';
   for(var i=1;i<=16;i++){
-    var d=document.createElement('div');d.className='ball blu';d.textContent=n2(i);d.dataset.n=i;
-    if(S.blues.has(i))d.classList.add('on');
+    var d=document.createElement('div');
+    d.className='ball blu';
+    d.innerHTML=n2(i);
+    d.setAttribute('data-n',i);
+    if(has(blues,i))d.className+=' on';
+    d.onclick=(function(nn){return function(){onBlue(nn)}})(i);
     bp.appendChild(d);
   }
-  $('redHint').textContent='候选'+S.reds.size+' · 杀号'+S.kills.size+' · 胆码'+S.dans.size+(S.useCombos?' · 投注集模式':'');
+  $('redHint').innerHTML='候选'+count(reds)+' 杀号'+count(kills)+' 胆码'+count(dans)+(useCombos?' [投注集]':'');
 }
+
+function onRed(n){
+  if(mode==='kill'){toggle(kills,n);delete reds[n];delete dans[n]}
+  else if(mode==='dan'){toggle(dans,n);delete kills[n];delete reds[n]}
+  else{toggle(reds,n);delete kills[n];delete dans[n]}
+  render();
+}
+function onBlue(n){toggle(blues,n);render()}
 
 function setMode(m){
-  S.mode=m;
-  ['mPool','mKill','mDan'].forEach(function(id){$(id).classList.remove('on')});
-  if(m==='pool')$('mPool').classList.add('on');
-  if(m==='kill')$('mKill').classList.add('on');
-  if(m==='dan')$('mDan').classList.add('on');
+  mode=m;
+  $('mPool').className=m==='pool'?'btn on':'btn';
+  $('mKill').className=m==='kill'?'btn on':'btn';
+  $('mDan').className=m==='dan'?'btn on':'btn';
 }
-
-$('redPad').addEventListener('click',function(e){
-  var t=e.target.closest('.ball');if(!t)return;
-  var n=+t.dataset.n;
-  if(S.mode==='kill'){S.kills.has(n)?S.kills.delete(n):S.kills.add(n);S.reds.delete(n);S.dans.delete(n)}
-  else if(S.mode==='dan'){S.dans.has(n)?S.dans.delete(n):S.dans.add(n);S.kills.delete(n);S.reds.delete(n)}
-  else{S.reds.has(n)?S.reds.delete(n):S.reds.add(n);S.kills.delete(n);S.dans.delete(n)}
-  render();
-});
-
-$('bluePad').addEventListener('click',function(e){
-  var t=e.target.closest('.ball');if(!t)return;
-  var n=+t.dataset.n;
-  S.blues.has(n)?S.blues.delete(n):S.blues.add(n);
-  render();
-});
 
 $('mPool').onclick=function(){setMode('pool')};
 $('mKill').onclick=function(){setMode('kill')};
 $('mDan').onclick=function(){setMode('dan')};
-$('clrRed').onclick=function(){S.reds.clear();S.kills.clear();S.dans.clear();render()};
+$('clrRed').onclick=function(){reds={};kills={};dans={};render()};
 $('btnReset').onclick=function(){
-  S.reds.clear();S.kills.clear();S.dans.clear();S.blues.clear();S.last=[];S.stages=[];S.useCombos=false;
-  render();$('stageLog').textContent='暂无轮次';$('sum').textContent='尚未过滤';$('list').textContent='';
+  reds={};kills={};dans={};blues={};last=[];stages=[];useCombos=false;
+  render();$('stageLog').innerHTML='暂无轮次';$('sum').innerHTML='尚未过滤';$('list').innerHTML='';
 };
 
 function comb(arr,k){
   var out=[];
-  function rec(start,path){
-    if(path.length===k){out.push(path.slice());return}
-    for(var i=start;i<arr.length;i++){path.push(arr[i]);rec(i+1,path);path.pop()}
+  function rec(s,p){
+    if(p.length===k){out.push(p.slice());return}
+    for(var i=s;i<arr.length;i++){p.push(arr[i]);rec(i+1,p);p.pop()}
   }
   rec(0,[]);return out;
 }
 
 function okCombo(c){
-  var sum=0,mn=99,mx=0,odd=0,big=0;
-  for(var i=0;i<6;i++){var x=c[i];sum+=x;if(x<mn)mn=x;if(x>mx)mx=x;if(x%2)odd++;if(x>=17)big++}
+  var sum=0,mn=99,mx=0,odd=0,big=0,i,x;
+  for(i=0;i<6;i++){x=c[i];sum+=x;if(x<mn)mn=x;if(x>mx)mx=x;if(x%2)odd++;if(x>=17)big++}
   var span=mx-mn;
   if($('enSum').checked){var a=+$('sumMin').value,b=+$('sumMax').value;if(sum<a||sum>b)return false}
   if($('enSpan').checked){var a=+$('spanMin').value,b=+$('spanMax').value;if(span<a||span>b)return false}
   if($('enOdd').checked){var a=+$('oddMin').value,b=+$('oddMax').value;if(odd<a||odd>b)return false}
   if($('enBig').checked){var a=+$('bigMin').value,b=+$('bigMax').value;if(big<a||big>b)return false}
-  for(var i=0;i<6;i++){if(S.kills.has(c[i]))return false}
-  if(S.dans.size){var hit=0;S.dans.forEach(function(d){if(c.indexOf(d)>=0)hit++});if(hit<S.dans.size)return false}
+  for(i=0;i<6;i++){if(has(kills,c[i]))return false}
+  var dk=keys(dans);
+  for(i=0;i<dk.length;i++){if(c.indexOf(dk[i])<0)return false}
   return true;
 }
 
 $('btnRun').onclick=function(){
-  var pool=[].concat(Array.from(S.reds)).sort(function(a,b){return a-b});
-  var src, inputN;
-  if(S.useCombos && S.last.length){
-    src=S.last; inputN=src.length;
-  } else {
-    if(pool.length<6){alert('请至少选6个候选红球，或先有投注集');return}
-    src=comb(pool,6); inputN=src.length;
+  var pool=keys(reds);
+  var src,inputN;
+  if(useCombos&&last.length){src=last;inputN=src.length}
+  else{
+    if(pool.length<6){alert('请至少选6个候选红球');return}
+    src=comb(pool,6);inputN=src.length;
   }
-  var pass=[];
-  for(var i=0;i<src.length;i++){
-    var c=src[i];
-    if(okCombo(c))pass.push(c);
+  var pass=[],i;
+  for(i=0;i<src.length;i++){
+    if(okCombo(src[i]))pass.push(src[i]);
     if(pass.length>=MAX)break;
   }
-  S.last=pass;
-  S.stages.push({in:inputN,out:pass.length});
-  $('stageLog').textContent=S.stages.map(function(s,i){return '第'+(i+1)+'轮: 输入'+s.in+' → 通过'+s.out}).join('\n');
-  $('sum').textContent='输入 '+inputN+' 注，通过 '+pass.length+' 注'+(pass.length>=MAX?'（已截断）':'');
-  var lines=[];
-  for(var i=0;i<Math.min(pass.length,200);i++){
-    lines.push(pass[i].map(n2).join(' '));
+  last=pass;
+  stages.push({inn:inputN,out:pass.length});
+  var log='';
+  for(i=0;i<stages.length;i++)log+='第'+(i+1)+'轮: 输入'+stages[i].inn+' → 通过'+stages[i].out+'\n';
+  $('stageLog').innerHTML=log;
+  $('sum').innerHTML='输入 '+inputN+' 注，通过 '+pass.length+' 注';
+  var lines='';
+  for(i=0;i<Math.min(pass.length,100);i++){
+    var line='',j;
+    for(j=0;j<6;j++){if(j)line+=' ';line+=n2(pass[i][j])}
+    lines+=line+'\n';
   }
-  if(pass.length>200)lines.push('… 共 '+pass.length+' 注，仅显示前200');
-  $('list').textContent=lines.join('\n')||'无通过';
+  if(pass.length>100)lines+='…共'+pass.length+'注';
+  $('list').innerHTML=lines||'无通过';
 };
 
 $('btnUse').onclick=function(){
-  if(!S.last.length){alert('请先过滤出结果');return}
-  S.useCombos=true;
-  alert('已切换为「本轮投注集」模式\n下一轮将用通过的 '+S.last.length+' 注作为输入');
+  if(!last.length){alert('请先过滤');return}
+  useCombos=true;
+  alert('已用本轮投注集，共'+last.length+'注');
   render();
 };
-$('btnClrSt').onclick=function(){S.stages=[];S.last=[];S.useCombos=false;$('stageLog').textContent='暂无轮次';render()};
+$('btnClrSt').onclick=function(){stages=[];last=[];useCombos=false;$('stageLog').innerHTML='暂无轮次';render()};
 
 render();
-})();
 </script>
 </body>
 </html>

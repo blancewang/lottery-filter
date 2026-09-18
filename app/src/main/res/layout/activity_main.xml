@@ -75,3 +75,302 @@
 
     </LinearLayout>
 </ScrollView>
+
+<!-- 分区结构 -->
+        <TextView
+            android:text="三区结构 (1–11 / 12–22 / 23–33)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minQ1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxQ1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minQ2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxQ2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minQ3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxQ3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 四区结构 -->
+        <TextView
+            android:text="四区结构 (1–8 / 9–16 / 17–24 / 25–33)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minZ1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxZ1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minZ2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxZ2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minZ3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxZ3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minZ4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxZ4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 五区结构 -->
+        <TextView
+            android:text="五区结构 (1–7 / 8–14 / 15–21 / 22–28 / 29–33)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minW1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxW1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minW2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxW2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minW3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxW3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minW4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxW4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minW5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxW5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+<!-- 路数结构 -->
+        <TextView
+            android:text="路数结构 (0 路 / 1 路 / 2 路)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minL0" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxL0" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minL1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxL1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minL2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxL2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 行列结构 -->
+        <TextView
+            android:text="行列结构 (矩阵结构)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <!-- 行 -->
+        <TextView android:text="行结构 (1~33 映射为 6 行)" />
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minRow6" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxRow6" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 列 -->
+        <TextView android:text="列结构 (1~33 映射为 6 列)" />
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol1" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol2" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol3" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol4" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol5" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCol6" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCol6" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 江恩结构 -->
+        <TextView
+            android:text="江恩结构 (角度 / 方位)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <CheckBox android:id="@+id/allowGannEast" android:text="允许东" />
+        <CheckBox android:id="@+id/allowGannSouth" android:text="允许南" />
+        <CheckBox android:id="@+id/allowGannWest" android:text="允许西" />
+        <CheckBox android:id="@+id/allowGannNorth" android:text="允许北" />
+
+        <CheckBox android:id="@+id/allowGann45" android:text="允许 45°" />
+        <CheckBox android:id="@+id/allowGann90" android:text="允许 90°" />
+        <CheckBox android:id="@+id/allowGann135" android:text="允许 135°" />
+        <CheckBox android:id="@+id/allowGann180" android:text="允许 180°" />
+
+        <!-- 自定义组结构 -->
+        <TextView
+            android:text="自定义组结构 (用逗号分隔数字)"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/customGroupInput"
+            android:hint="例如：1,5,9,12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minCustom"
+                android:inputType="number"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+            <EditText android:id="@+id/maxCustom"
+                android:inputType="number"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 蓝球结构 -->
+        <TextView
+            android:text="蓝球结构"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <CheckBox android:id="@+id/allowOddBlue" android:text="允许奇数蓝球" />
+        <CheckBox android:id="@+id/allowEvenBlue" android:text="允许偶数蓝球" />
+
+        <TextView android:text="蓝球范围" />
+        <LinearLayout android:orientation="horizontal">
+            <EditText android:id="@+id/minBlue" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+            <EditText android:id="@+id/maxBlue" android:inputType="number"
+                android:layout_width="0dp" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <CheckBox android:id="@+id/allowPrimeBlue" android:text="允许质数蓝球" />
+        <CheckBox android:id="@+id/allowCompositeBlue" android:text="允许合数蓝球" />
+
+        <!-- 过滤按钮 -->
+        <Button
+            android:id="@+id/filterButton"
+            android:text="开始过滤"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- 结果展示 -->
+        <TextView
+            android:id="@+id/resultView"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>

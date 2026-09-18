@@ -5,11 +5,28 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Assemble index.html from parts (if present)
+        run: |
+          mkdir -p app/src/main/assets
+          if ls app/src/main/assets/parts/p*.txt 1>/dev/null 2>&1; then
+            cat app/src/main/assets/parts/p*.txt > app/src/main/assets/index.html
+            echo "Assembled index.html ($(wc -c < app/src/main/assets/index.html) bytes)"
+          elif [ -f app/src/main/assets/index.html ]; then
+            echo "Using existing index.html ($(wc -c < app/src/main/assets/index.html) bytes)"
+          else
+            echo "ERROR: missing app/src/main/assets/index.html"
+            exit 1
+          fi
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -31,25 +48,26 @@ jobs:
           fi
           ./gradlew assembleDebug --stacktrace
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: ssq-filter-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Create Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Create GitHub Release with APK
+        if: success()
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v3.4.${{ github.run_number }}
           name: 双色球缩水 v3.4.${{ github.run_number }}
           body: |
-            ## 安装说明
-            1. 下载下方 app-debug.apk
-            2. 手机打开「允许安装未知来源」
-            3. 点击 APK 安装
+            ## 手机安装
+            1. 下载下面的 **app-debug.apk**
+            2. 设置 → 安全 → 允许安装未知应用
+            3. 打开 APK 安装
 
-            说明：缩水只减少注数，不提高单注中奖概率。
+            缩水只减少注数，不提高单注中奖概率。
           files: app/build/outputs/apk/debug/app-debug.apk
+          generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

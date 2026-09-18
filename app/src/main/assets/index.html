@@ -1,2 +1,68 @@
-<!DOCTYPE html><html><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>加载中</title></head>
-<body style="background:#0b0f14;color:#e8eaed;font-family:sans-serif;padding:20px">正在加载过滤界面…若长时间无反应，请重新安装带完整 assets/parts 的版本。</body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>双色球缩水 V3.4</title>
+<style>
+:root{--bg:#0b0f14;--panel:#151b24;--panel2:#1c2430;--line:#2a3444;--text:#e8eaed;--muted:#9aa0a6;--accent:#e0a458;--red:#e85d5d;--blue:#5b9bd5;--ok:#3dd68c;--warn:#f0b429}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.4;-webkit-tap-highlight-color:transparent}
+.container{max-width:480px;margin:0 auto;padding:8px 10px 80px}
+header{text-align:center;padding:10px 0 6px}
+header h1{font-size:18px;font-weight:600;color:var(--accent)}
+header p{font-size:11px;color:var(--muted);margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}
+.card h2{font-size:13px;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.card h2 .badge{font-size:10px;background:var(--panel2);padding:1px 6px;border-radius:8px;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+label{font-size:12px;color:var(--muted)}
+input[type=number],input[type=text],select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:5px 8px;font-size:13px;width:60px}
+input[type=text].wide{width:100%}
+.btn{background:var(--accent);color:#0b0f14;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.btn:active{opacity:.85}
+.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn.danger{background:var(--red);color:#fff}
+.btn.block{width:100%;margin-top:6px}
+.pad{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}
+.pad.blue{grid-template-columns:repeat(8,1fr)}
+.num{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:11px;font-weight:600;background:var(--panel2);border:1px solid var(--line);color:var(--text);cursor:pointer;user-select:none}
+.num.red.sel{background:var(--red);border-color:var(--red);color:#fff}
+.num.blue.sel{background:var(--blue);border-color:var(--blue);color:#fff}
+.num.kill{opacity:.35;text-decoration:line-through}
+.num.dan{box-shadow:0 0 0 2px var(--ok)}
+.tol{display:flex;gap:4px;align-items:center;font-size:11px}
+.tol input{width:40px}
+.stage-log{font-size:11px;color:var(--muted);max-height:120px;overflow-y:auto;background:var(--panel2);border-radius:6px;padding:6px}
+.stage-log div{margin-bottom:2px}
+.fixed-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);padding:8px 10px;display:flex;gap:8px;z-index:100}
+.fixed-bar .btn{flex:1}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;justify-content:center}
+.modal.show{display:flex}
+.modal-content{background:var(--panel);border-radius:16px 16px 0 0;padding:16px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.modal h3{font-size:15px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:4px 10px;font-size:12px;cursor:pointer}
+.chip.on{background:var(--accent);color:#0b0f14;border-color:var(--accent)}
+.result-box{font-size:12px;max-height:200px;overflow-y:auto;background:var(--panel2);border-radius:6px;padding:8px;white-space:pre-wrap;word-break:break-all}
+.hint{font-size:11px;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>双色球缩水 V3.4</h1>
+<p>只做组合筛选 · 不预测 · 不提高单注概率</p>
+</header>
+
+<!-- 内容将在完整版中加载 -->
+<div class="card">
+<p style="color:var(--muted);font-size:12px">界面加载中… 若看到此提示，请重新从 Releases 下载完整 APK。</p>
+</div>
+</div>
+<script>
+// Placeholder - full script will be in complete build
+alert("请使用完整版 APK，从 GitHub Releases 下载");
+</script>
+</body>
+</html>

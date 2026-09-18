@@ -2,6 +2,7 @@ package com.binwen.ssqfilter
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -10,8 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * 双色球缩水 V3.4 — WebView 直接加载 assets/index.html
- * 使用 file:/// 路径，保证点击与 JS 正常。
+ * 双色球缩水 V3.4 — WebView + Kotlin 原生过滤引擎
  */
 class MainActivity : AppCompatActivity() {
 
@@ -41,24 +41,24 @@ class MainActivity : AppCompatActivity() {
         s.loadWithOverviewMode = true
         s.mediaPlaybackRequiresUserGesture = false
         s.javaScriptCanOpenWindowsAutomatically = true
-        // 改善部分机型触摸延迟
         webView.isClickable = true
         webView.isFocusable = true
         webView.isFocusableInTouchMode = true
 
+        // 原生过滤桥：window.SsqNative.runFilter(jsonString)
+        webView.addJavascriptInterface(SsqBridge(), "SsqNative")
+
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                // 注入一次兜底：确保点击可用
                 view?.evaluateJavascript(
-                    "(function(){try{document.body.style.webkitUserSelect='none';document.body.style.userSelect='none';}catch(e){}})();",
+                    "(function(){try{window.__SSQ_NATIVE__=true;document.body.style.webkitUserSelect='none';}catch(e){}})();",
                     null
                 )
             }
         }
         webView.webChromeClient = WebChromeClient()
 
-        // 直接用 file 协议加载，比 loadDataWithBaseURL 更稳定
         webView.loadUrl("file:///android_asset/index.html")
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -71,5 +71,16 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         webView.destroy()
         super.onDestroy()
+    }
+
+    /** JS 可调用：SsqNative.runFilter(configJson) → resultJson */
+    class SsqBridge {
+        @JavascriptInterface
+        fun runFilter(configJson: String): String {
+            return FilterEngine.run(configJson)
+        }
+
+        @JavascriptInterface
+        fun ping(): String = "ok"
     }
 }

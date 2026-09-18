@@ -8,9 +8,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 /**
- * 双色球缩水 V3.4 — WebView 壳 + assets/index.html
+ * 双色球缩水 V3.4 — 启动时拼接 assets/parts 为完整 HTML
  * 缩水只减少注数，不提高单注中奖概率。
  */
 class MainActivity : AppCompatActivity() {
@@ -42,11 +44,14 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
 
-        if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState)
-        } else {
-            webView.loadUrl("file:///android_asset/index.html")
-        }
+        val html = loadBundledHtml()
+        webView.loadDataWithBaseURL(
+            "file:///android_asset/",
+            html,
+            "text/html",
+            "utf-8",
+            null
+        )
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -55,9 +60,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        webView.saveState(outState)
+    private fun loadBundledHtml(): String {
+        val am = assets
+        val names = (am.list("parts") ?: emptyArray()).sorted()
+        if (names.isEmpty()) {
+            return am.open("index.html").bufferedReader().use { it.readText() }
+        }
+        val sb = StringBuilder()
+        for (name in names) {
+            am.open("parts/$name").use { input ->
+                BufferedReader(InputStreamReader(input, Charsets.UTF_8)).use { reader ->
+                    sb.append(reader.readText())
+                }
+            }
+        }
+        return sb.toString()
     }
 
     override fun onDestroy() {

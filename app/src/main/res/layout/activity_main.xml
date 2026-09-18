@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layoutwidth="matchparent"
+    android:layoutheight="matchparent">
+
+    <TextView
+        android:text="双色球过滤工具（原生安卓）"
+        android:textSize="20sp"
+        android:layoutwidth="wrapcontent"
+        android:layoutheight="wrapcontent"/>
+
+</LinearLayout>

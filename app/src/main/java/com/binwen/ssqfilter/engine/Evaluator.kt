@@ -4,7 +4,7 @@ import com.binwen.ssqfilter.model.Ticket
 
 class Evaluator {
 
-    // 基础结构条件
+    // 红球结构条件
     var minSum = 0
     var maxSum = 200
 
@@ -20,15 +20,30 @@ class Evaluator {
     var minConsecutive = 0
     var maxConsecutive = 6
 
+    // 蓝球结构条件
+    var allowOddBlue = true
+    var allowEvenBlue = true
+
+    var minBlue = 1
+    var maxBlue = 16
+
+    var allowPrimeBlue = true
+    var allowCompositeBlue = true
+
     fun evaluate(ticket: Ticket): Boolean {
 
         val reds = ticket.reds
+        val blue = ticket.blue
+
+        // -------------------------
+        // 红球结构条件
+        // -------------------------
 
         // 1. 和值
         val sum = reds.sum()
         if (sum !in minSum..maxSum) return false
 
-        // 2. 跨度（最大 - 最小）
+        // 2. 跨度
         val span = reds.last() - reds.first()
         if (span !in minSpan..maxSpan) return false
 
@@ -47,6 +62,30 @@ class Evaluator {
         }
         if (consecutive !in minConsecutive..maxConsecutive) return false
 
+        // -------------------------
+        // 蓝球结构条件
+        -------------------------
+
+        // 6. 蓝球奇偶
+        if (blue % 2 == 1 && !allowOddBlue) return false
+        if (blue % 2 == 0 && !allowEvenBlue) return false
+
+        // 7. 蓝球区间
+        if (blue !in minBlue..maxBlue) return false
+
+        // 8. 蓝球质合
+        val isPrime = isPrime(blue)
+        if (isPrime && !allowPrimeBlue) return false
+        if (!isPrime && !allowCompositeBlue) return false
+
+        return true
+    }
+
+    private fun isPrime(n: Int): Boolean {
+        if (n < 2) return false
+        for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
+            if (n % i == 0) return false
+        }
         return true
     }
 }

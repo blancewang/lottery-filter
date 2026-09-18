@@ -13,9 +13,6 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
-/**
- * 双色球缩水 V3.4 — 优先拼接 assets/parts 得到完整 HTML，避免大文件损坏。
- */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
@@ -61,14 +58,13 @@ class MainActivity : AppCompatActivity() {
         }
         webView.webChromeClient = WebChromeClient()
 
-        val html = loadBundledHtml()
-        webView.loadDataWithBaseURL(
-            "file:///android_asset/",
-            html,
-            "text/html",
-            "UTF-8",
-            null
-        )
+        // Prefer complete assembled HTML from parts if present and looks valid
+        val fromParts = tryLoadParts()
+        if (fromParts != null && fromParts.contains("</script>") && fromParts.contains("开始过滤")) {
+            webView.loadDataWithBaseURL("file:///android_asset/", fromParts, "text/html", "UTF-8", null)
+        } else {
+            webView.loadUrl("file:///android_asset/index.html")
+        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -77,30 +73,24 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /** 优先按序拼接 assets/parts/p00.txt…，否则读 index.html */
-    private fun loadBundledHtml(): String {
+    private fun tryLoadParts(): String? {
         return try {
             val names = assets.list("parts")?.filter { it.endsWith(".txt") }?.sorted().orEmpty()
-            if (names.isNotEmpty()) {
-                val sb = StringBuilder()
-                for (name in names) {
-                    assets.open("parts/$name").use { ins ->
-                        BufferedReader(InputStreamReader(ins, StandardCharsets.UTF_8)).use { br ->
-                            var line: String?
-                            while (br.readLine().also { line = it } != null) {
-                                sb.append(line).append('\n')
-                            }
+            if (names.isEmpty()) return null
+            val sb = StringBuilder()
+            for (name in names) {
+                assets.open("parts/$name").use { ins ->
+                    BufferedReader(InputStreamReader(ins, StandardCharsets.UTF_8)).use { br ->
+                        var line: String?
+                        while (br.readLine().also { line = it } != null) {
+                            sb.append(line).append('\n')
                         }
                     }
                 }
-                sb.toString()
-            } else {
-                assets.open("index.html").use { ins ->
-                    ins.bufferedReader(StandardCharsets.UTF_8).readText()
-                }
             }
-        } catch (e: Exception) {
-            "<html><body style='background:#0b0f14;color:#e8eaed;padding:16px'>加载失败: ${e.message}</body></html>"
+            sb.toString()
+        } catch (_: Exception) {
+            null
         }
     }
 

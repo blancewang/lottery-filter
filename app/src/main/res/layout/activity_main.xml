@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layoutwidth="matchparent"
     android:layoutheight="matchparent">
 
-    <TextView
-        android:text="双色球过滤工具（原生安卓）"
-        android:textSize="20sp"
-        android:layoutwidth="wrapcontent"
-        android:layoutheight="wrapcontent"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layoutwidth="matchparent"
+        android:layoutheight="wrapcontent">
 
-</LinearLayout>
+        <TextView
+            android:text="双色球过滤工具（原生安卓）"
+            android:textSize="20sp"
+            android:layoutwidth="wrapcontent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 杀号 -->
+        <EditText
+            android:id="@+id/inputKill"
+            android:hint="杀号（用逗号分隔，如：1,2,3）"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 胆码 -->
+        <EditText
+            android:id="@+id/inputDan"
+            android:hint="胆码（如：5,12）"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 候选池 -->
+        <EditText
+            android:id="@+id/inputCandidates"
+            android:hint="候选池（如：1-33 或 1,2,3）"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 蓝球池 -->
+        <EditText
+            android:id="@+id/inputBlue"
+            android:hint="蓝球池（如：1-16 或 1,2,3）"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 容错值 -->
+        <EditText
+            android:id="@+id/inputTolerance"
+            android:hint="容错值（如：0 或 1）"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 按钮 -->
+        <Button
+            android:id="@+id/btnRun"
+            android:text="开始过滤"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+        <!-- 结果 -->
+        <TextView
+            android:id="@+id/output"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:layoutwidth="matchparent"
+            android:layoutheight="wrapcontent"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -43,15 +43,15 @@ body{padding-bottom:76px}
 </head>
 <body>
 <div class="hd">
-  <div><h1>双色球缩水 V3.4</h1><div class="sub">分板块容错 · 自定义组 · 点选调值</div></div>
+  <div><h1>双色球缩水 V3.4</h1><div class="sub" id="engineTag">原生加速 · 分板块容错 · 自定义组</div></div>
   <div><button class="btn sm" type="button" id="btnHelp">说明</button> <button class="btn sm" type="button" id="btnReset">重置</button></div>
 </div>
 <div class="sec" id="helpBox" style="display:none"><div class="sh">说明</div><div class="sb hint">
-<b>选号</b>：候选/杀号/胆码模式后点红球。<br>
-<b>条件</b>：勾选启用，−/+ 调允许区间。<br>
-<b>容错</b>：各板块允许「不满足」的条件条数（下限~上限）。总容错限制全部板块合计失败数。<br>
-<b>自定义组</b>：点「点选号码」后点红球加入组，再设允许命中个数。<br>
-<b>多轮</b>：过滤后「用本轮投注集」继续缩。<br>
+<b>选号</b>：候选/杀号/胆码后点红球。<br>
+<b>条件</b>：勾选启用，−/+ 调区间。<br>
+<b>容错</b>：各板块允许失败条数区间；总容错限制合计失败数。<br>
+<b>自定义组</b>：添加组→点选号码→设允许个数。<br>
+<b>过滤</b>：App内用 Kotlin 原生引擎加速枚举。<br>
 声明：只缩注数，不提高单注中奖概率。
 </div></div>
 <div class="sec"><div class="sh">红球</div><div class="sb">
@@ -61,8 +61,7 @@ body{padding-bottom:76px}
 </div></div>
 <div class="sec"><div class="sh">蓝球</div><div class="sb"><div class="pad" id="bluePad"></div></div></div>
 <div class="sec"><div class="sh">分板块独立容错 <button class="link" type="button" id="btnTipTol">?</button></div>
-<div class="sb"><div class="help" id="tipTol">结构=和值跨度奇偶等；分区=三区四区；路=012；五行/边缘/自定义各自独立。总容错限制各板块失败数之和。</div>
-<div id="tols"></div></div></div>
+<div class="sb"><div class="help" id="tipTol">结构/分区/路/五行/边缘/自定义各自独立。总容错限制各板块失败数之和。</div><div id="tols"></div></div></div>
 <div class="sec"><div class="sh">结构条件</div><div class="sb"><div id="struct"></div></div></div>
 <div class="sec"><div class="sh">三区 / 四区 / 012</div><div class="sb"><div id="zones"></div></div></div>
 <div class="sec"><div class="sh">五行 / 边缘</div><div class="sb"><div id="extra"></div></div></div>
@@ -213,19 +212,43 @@ function evalOne(c){
   if(!inRange(total,v('tolAllLo'),v('tolAllHi')))return false;
   return true;
 }
-$('btnRun').onclick=function(){
+function collectEn(){var o={};['enSum','enSpan','enOdd','enBig','enPrime','enAc','enCon','enZ3','enZ4','enRoad','enWx','enEdge'].forEach(function(k){o[k]=chk(k)?1:0});return o}
+function showResult(inputN,pass,tag){
+  last=pass;stages.push({inn:inputN,out:pass.length});
+  var log='',i;for(i=0;i<stages.length;i++)log+='第'+(i+1)+'轮: 输入'+stages[i].inn+' → 通过'+stages[i].out+'\n';
+  $('stageLog').innerHTML=log;
+  $('sum').innerHTML='输入 '+inputN+' 注，通过 '+pass.length+' 注'+(tag?' · '+tag:'');
+  var lines='';for(i=0;i<Math.min(pass.length,60);i++){var line='',j;for(j=0;j<6;j++){if(j)line+=' ';line+=n2(pass[i][j])}lines+=line+'\n'}
+  if(pass.length>60)lines+='…共'+pass.length+'注';$('list').innerHTML=lines||'无通过';
+}
+function runJs(){
   var pool=keys(reds),src,inputN,i;
   if(useCombos&&last.length){src=last;inputN=src.length}
   else{if(pool.length<6){alert('请至少选6个候选红球');return}src=comb(pool,6);inputN=src.length}
   var pass=[];for(i=0;i<src.length;i++){if(evalOne(src[i]))pass.push(src[i]);if(pass.length>=MAX)break}
-  last=pass;stages.push({inn:inputN,out:pass.length});
-  var log='';for(i=0;i<stages.length;i++)log+='第'+(i+1)+'轮: 输入'+stages[i].inn+' → 通过'+stages[i].out+'\n';
-  $('stageLog').innerHTML=log;$('sum').innerHTML='输入 '+inputN+' 注，通过 '+pass.length+' 注';
-  var lines='';for(i=0;i<Math.min(pass.length,60);i++){var line='',j;for(j=0;j<6;j++){if(j)line+=' ';line+=n2(pass[i][j])}lines+=line+'\n'}
-  if(pass.length>60)lines+='…共'+pass.length+'注';$('list').innerHTML=lines||'无通过';
+  showResult(inputN,pass,'JS');
+}
+function runNative(){
+  var pool=keys(reds);
+  if(!(useCombos&&last.length)&&pool.length<6){alert('请至少选6个候选红球');return}
+  var cfg={max:MAX,kills:keys(kills),dans:keys(dans),danMin:v('danMin'),vals:VALS,en:collectEn(),groups:groups.map(function(g){return{on:g.on,nums:g.nums,a:g.a,b:g.b}})};
+  if(useCombos&&last.length)cfg.combos=last;else cfg.pool=pool;
+  try{
+    var raw=window.SsqNative.runFilter(JSON.stringify(cfg));
+    var res=JSON.parse(raw);
+    if(!res.ok){runJs();return}
+    showResult(res.input,res.pass||[],'原生');
+  }catch(e){runJs()}
+}
+$('btnRun').onclick=function(){
+  if(window.SsqNative&&typeof window.SsqNative.runFilter==='function')runNative();
+  else runJs();
 };
 $('btnUse').onclick=function(){if(!last.length){alert('请先过滤');return}useCombos=true;alert('已用本轮投注集 '+last.length+' 注');render()};
 $('btnClrSt').onclick=function(){stages=[];last=[];useCombos=false;$('stageLog').innerHTML='暂无轮次';render()};
+setTimeout(function(){
+  try{if(window.SsqNative&&window.SsqNative.ping()==='ok')$('engineTag').innerHTML='Kotlin原生引擎 · 已启用'}catch(e){$('engineTag').innerHTML='JS引擎 · 浏览器模式'}
+},300);
 buildUI();render();
 </script>
 </body>

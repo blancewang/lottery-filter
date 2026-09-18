@@ -8,12 +8,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 /**
- * 双色球缩水 — WebView 加载 assets/index.html
- * 若存在 assets/parts/p*.txt，启动时按文件名排序拼接后加载。
+ * 双色球缩水 V3.4 — WebView 直接加载 assets/index.html
+ * 使用 file:/// 路径，保证点击与 JS 正常。
  */
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         webView = WebView(this)
         setContentView(webView)
 
@@ -31,38 +30,42 @@ class MainActivity : AppCompatActivity() {
         s.databaseEnabled = true
         s.allowFileAccess = true
         s.allowContentAccess = true
-        s.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
-        s.cacheMode = WebSettings.LOAD_DEFAULT
+        s.allowFileAccessFromFileURLs = true
+        s.allowUniversalAccessFromFileURLs = true
+        s.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        s.cacheMode = WebSettings.LOAD_NO_CACHE
         s.setSupportZoom(false)
+        s.builtInZoomControls = false
+        s.displayZoomControls = false
         s.useWideViewPort = true
         s.loadWithOverviewMode = true
+        s.mediaPlaybackRequiresUserGesture = false
+        s.javaScriptCanOpenWindowsAutomatically = true
+        // 改善部分机型触摸延迟
+        webView.isClickable = true
+        webView.isFocusable = true
+        webView.isFocusableInTouchMode = true
 
-        webView.webViewClient = WebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // 注入一次兜底：确保点击可用
+                view?.evaluateJavascript(
+                    "(function(){try{document.body.style.webkitUserSelect='none';document.body.style.userSelect='none';}catch(e){}})();",
+                    null
+                )
+            }
+        }
         webView.webChromeClient = WebChromeClient()
 
-        val html = loadBundledHtml()
-        webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "utf-8", null)
+        // 直接用 file 协议加载，比 loadDataWithBaseURL 更稳定
+        webView.loadUrl("file:///android_asset/index.html")
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (webView.canGoBack()) webView.goBack() else finish()
             }
         })
-    }
-
-    private fun loadBundledHtml(): String {
-        val am = assets
-        val names = (am.list("parts") ?: emptyArray()).filter { it.endsWith(".txt") }.sorted()
-        if (names.isNotEmpty()) {
-            val sb = StringBuilder()
-            for (name in names) {
-                am.open("parts/$name").use { input ->
-                    BufferedReader(InputStreamReader(input, Charsets.UTF_8)).use { sb.append(it.readText()) }
-                }
-            }
-            return sb.toString()
-        }
-        return am.open("index.html").bufferedReader(Charsets.UTF_8).use { it.readText() }
     }
 
     override fun onDestroy() {

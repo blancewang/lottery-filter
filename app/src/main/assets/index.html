@@ -1,1 +1,222 @@
-<!DOCTYPE html><html><head><meta charset=UTF-8><title>loading</title></head><body>loading… CI will assemble from parts</body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>双色球缩水 V3.4</title>
+<style>
+:root{--bg:#0b0f14;--p:#151b24;--p2:#1c2430;--l:#2a3444;--t:#e8eaed;--m:#9aa3b2;--a:#e0a458;--r:#e85d5d;--b:#4a9eff;--ok:#3dd68c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.4;-webkit-tap-highlight-color:transparent}
+body{padding-bottom:72px}
+.hd{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.96);border-bottom:1px solid var(--l);padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.hd h1{font-size:16px;color:var(--a);font-weight:600}
+.hd .s{font-size:11px;color:var(--m)}
+.sec{margin:10px;background:var(--p);border:1px solid var(--l);border-radius:10px;overflow:hidden}
+.sh{padding:10px 12px;background:var(--p2);border-bottom:1px solid var(--l);font-weight:600;font-size:13px}
+.sb{padding:10px 12px}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center}
+.btn{background:var(--p2);border:1px solid var(--l);color:var(--t);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;touch-action:manipulation;-webkit-user-select:none}
+.btn:active{opacity:.8}
+.btn.on{border-color:var(--a);color:var(--a)}
+.btn.pri{background:linear-gradient(135deg,#c48a3a,#e0a458);border:none;color:#1a1208;font-weight:600}
+.btn.ok{background:rgba(61,214,140,.12);border-color:var(--ok);color:var(--ok)}
+.pad{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.pad.b{grid-template-columns:repeat(8,1fr)}
+.ball{aspect-ratio:1;border-radius:50%;border:1px solid var(--l);background:var(--bg);color:var(--t);font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;touch-action:manipulation}
+.ball.on{background:var(--r);border-color:var(--r);color:#fff;font-weight:600}
+.ball.blu.on{background:var(--b);border-color:var(--b)}
+.ball.kill{background:rgba(232,93,93,.2);border-color:var(--r);color:var(--r);text-decoration:line-through}
+.ball.dan{background:rgba(61,214,140,.2);border-color:var(--ok);color:var(--ok);font-weight:600}
+.hint{font-size:11px;color:var(--m);margin-top:4px}
+.ft{position:fixed;bottom:0;left:0;right:0;background:rgba(11,15,20,.97);border-top:1px solid var(--l);padding:8px 10px;display:flex;gap:8px;z-index:50}
+.ft .btn{flex:1}
+.log{font-family:ui-monospace,monospace;font-size:11px;max-height:160px;overflow:auto;background:var(--bg);padding:8px;border-radius:6px;border:1px solid var(--l);white-space:pre-wrap;margin-top:8px}
+label{font-size:12px;color:var(--m)}
+input[type=number]{width:52px;background:var(--bg);border:1px solid var(--l);color:var(--t);border-radius:6px;padding:5px 6px;font-size:13px}
+.chk{display:flex;align-items:center;gap:4px;font-size:12px;margin:4px 0}
+</style>
+</head>
+<body>
+<div class="hd">
+  <div><h1>双色球缩水 V3.4</h1><div class="s">只缩减注数 · 不预测 · 本地</div></div>
+  <button class="btn" type="button" id="btnReset">重置</button>
+</div>
+
+<div class="sec">
+  <div class="sh">红球 · 候选 / 杀号 / 胆码</div>
+  <div class="sb">
+    <div class="row">
+      <button class="btn on" type="button" id="mPool" data-m="pool">候选</button>
+      <button class="btn" type="button" id="mKill" data-m="kill">杀号</button>
+      <button class="btn" type="button" id="mDan" data-m="dan">胆码</button>
+      <button class="btn" type="button" id="clrRed">清空</button>
+    </div>
+    <div class="pad" id="redPad"></div>
+    <div class="hint" id="redHint">点号码切换状态</div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sh">蓝球（可多选）</div>
+  <div class="sb"><div class="pad b" id="bluePad"></div></div>
+</div>
+
+<div class="sec">
+  <div class="sh">结构条件（区间容错）</div>
+  <div class="sb">
+    <div class="row"><label>和值</label><input type="number" id="sumMin" value="60"><span>~</span><input type="number" id="sumMax" value="140"></div>
+    <div class="row"><label>跨度</label><input type="number" id="spanMin" value="10"><span>~</span><input type="number" id="spanMax" value="32"></div>
+    <div class="row"><label>奇数个数</label><input type="number" id="oddMin" value="1"><span>~</span><input type="number" id="oddMax" value="5"></div>
+    <div class="row"><label>大号(≥17)</label><input type="number" id="bigMin" value="1"><span>~</span><input type="number" id="bigMax" value="5"></div>
+    <div class="chk"><input type="checkbox" id="enSum" checked>启用和值</div>
+    <div class="chk"><input type="checkbox" id="enSpan" checked>启用跨度</div>
+    <div class="chk"><input type="checkbox" id="enOdd" checked>启用奇偶</div>
+    <div class="chk"><input type="checkbox" id="enBig" checked>启用大小</div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sh">多轮 · 本轮投注集</div>
+  <div class="sb">
+    <div class="row">
+      <button class="btn ok" type="button" id="btnUse">用本轮投注集</button>
+      <button class="btn" type="button" id="btnClrSt">清空轮次</button>
+    </div>
+    <div class="hint">过滤后点「用本轮投注集」，下一轮用通过的组合作输入</div>
+    <div class="log" id="stageLog">暂无轮次</div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sh">结果</div>
+  <div class="sb">
+    <div class="hint" id="sum">尚未过滤</div>
+    <div class="log" id="list"></div>
+  </div>
+</div>
+
+<div class="ft">
+  <button class="btn pri" type="button" id="btnRun">开始过滤</button>
+</div>
+
+<script>
+(function(){
+var S={mode:'pool',reds:new Set(),kills:new Set(),dans:new Set(),blues:new Set(),last:[],stages:[],useCombos:false};
+var MAX=25000;
+function $(id){return document.getElementById(id)}
+function n2(n){return n<10?'0'+n:''+n}
+
+function render(){
+  var rp=$('redPad');rp.innerHTML='';
+  for(var i=1;i<=33;i++){
+    var d=document.createElement('div');d.className='ball';d.textContent=n2(i);d.dataset.n=i;
+    if(S.kills.has(i))d.classList.add('kill');
+    else if(S.dans.has(i))d.classList.add('dan');
+    else if(S.reds.has(i))d.classList.add('on');
+    rp.appendChild(d);
+  }
+  var bp=$('bluePad');bp.innerHTML='';
+  for(var i=1;i<=16;i++){
+    var d=document.createElement('div');d.className='ball blu';d.textContent=n2(i);d.dataset.n=i;
+    if(S.blues.has(i))d.classList.add('on');
+    bp.appendChild(d);
+  }
+  $('redHint').textContent='候选'+S.reds.size+' · 杀号'+S.kills.size+' · 胆码'+S.dans.size+(S.useCombos?' · 投注集模式':'');
+}
+
+function setMode(m){
+  S.mode=m;
+  ['mPool','mKill','mDan'].forEach(function(id){$(id).classList.remove('on')});
+  if(m==='pool')$('mPool').classList.add('on');
+  if(m==='kill')$('mKill').classList.add('on');
+  if(m==='dan')$('mDan').classList.add('on');
+}
+
+$('redPad').addEventListener('click',function(e){
+  var t=e.target.closest('.ball');if(!t)return;
+  var n=+t.dataset.n;
+  if(S.mode==='kill'){S.kills.has(n)?S.kills.delete(n):S.kills.add(n);S.reds.delete(n);S.dans.delete(n)}
+  else if(S.mode==='dan'){S.dans.has(n)?S.dans.delete(n):S.dans.add(n);S.kills.delete(n);S.reds.delete(n)}
+  else{S.reds.has(n)?S.reds.delete(n):S.reds.add(n);S.kills.delete(n);S.dans.delete(n)}
+  render();
+});
+
+$('bluePad').addEventListener('click',function(e){
+  var t=e.target.closest('.ball');if(!t)return;
+  var n=+t.dataset.n;
+  S.blues.has(n)?S.blues.delete(n):S.blues.add(n);
+  render();
+});
+
+$('mPool').onclick=function(){setMode('pool')};
+$('mKill').onclick=function(){setMode('kill')};
+$('mDan').onclick=function(){setMode('dan')};
+$('clrRed').onclick=function(){S.reds.clear();S.kills.clear();S.dans.clear();render()};
+$('btnReset').onclick=function(){
+  S.reds.clear();S.kills.clear();S.dans.clear();S.blues.clear();S.last=[];S.stages=[];S.useCombos=false;
+  render();$('stageLog').textContent='暂无轮次';$('sum').textContent='尚未过滤';$('list').textContent='';
+};
+
+function comb(arr,k){
+  var out=[];
+  function rec(start,path){
+    if(path.length===k){out.push(path.slice());return}
+    for(var i=start;i<arr.length;i++){path.push(arr[i]);rec(i+1,path);path.pop()}
+  }
+  rec(0,[]);return out;
+}
+
+function okCombo(c){
+  var sum=0,mn=99,mx=0,odd=0,big=0;
+  for(var i=0;i<6;i++){var x=c[i];sum+=x;if(x<mn)mn=x;if(x>mx)mx=x;if(x%2)odd++;if(x>=17)big++}
+  var span=mx-mn;
+  if($('enSum').checked){var a=+$('sumMin').value,b=+$('sumMax').value;if(sum<a||sum>b)return false}
+  if($('enSpan').checked){var a=+$('spanMin').value,b=+$('spanMax').value;if(span<a||span>b)return false}
+  if($('enOdd').checked){var a=+$('oddMin').value,b=+$('oddMax').value;if(odd<a||odd>b)return false}
+  if($('enBig').checked){var a=+$('bigMin').value,b=+$('bigMax').value;if(big<a||big>b)return false}
+  for(var i=0;i<6;i++){if(S.kills.has(c[i]))return false}
+  if(S.dans.size){var hit=0;S.dans.forEach(function(d){if(c.indexOf(d)>=0)hit++});if(hit<S.dans.size)return false}
+  return true;
+}
+
+$('btnRun').onclick=function(){
+  var pool=[].concat(Array.from(S.reds)).sort(function(a,b){return a-b});
+  var src, inputN;
+  if(S.useCombos && S.last.length){
+    src=S.last; inputN=src.length;
+  } else {
+    if(pool.length<6){alert('请至少选6个候选红球，或先有投注集');return}
+    src=comb(pool,6); inputN=src.length;
+  }
+  var pass=[];
+  for(var i=0;i<src.length;i++){
+    var c=src[i];
+    if(okCombo(c))pass.push(c);
+    if(pass.length>=MAX)break;
+  }
+  S.last=pass;
+  S.stages.push({in:inputN,out:pass.length});
+  $('stageLog').textContent=S.stages.map(function(s,i){return '第'+(i+1)+'轮: 输入'+s.in+' → 通过'+s.out}).join('\n');
+  $('sum').textContent='输入 '+inputN+' 注，通过 '+pass.length+' 注'+(pass.length>=MAX?'（已截断）':'');
+  var lines=[];
+  for(var i=0;i<Math.min(pass.length,200);i++){
+    lines.push(pass[i].map(n2).join(' '));
+  }
+  if(pass.length>200)lines.push('… 共 '+pass.length+' 注，仅显示前200');
+  $('list').textContent=lines.join('\n')||'无通过';
+};
+
+$('btnUse').onclick=function(){
+  if(!S.last.length){alert('请先过滤出结果');return}
+  S.useCombos=true;
+  alert('已切换为「本轮投注集」模式\n下一轮将用通过的 '+S.last.length+' 注作为输入');
+  render();
+};
+$('btnClrSt').onclick=function(){S.stages=[];S.last=[];S.useCombos=false;$('stageLog').textContent='暂无轮次';render()};
+
+render();
+})();
+</script>
+</body>
+</html>

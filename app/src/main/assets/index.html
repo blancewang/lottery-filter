@@ -7,69 +7,61 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#0b0f14;color:#e8eaed;font-family:sans-serif;font-size:13px;-webkit-tap-highlight-color:transparent}
-body{padding-bottom:72px}
+body{padding-bottom:76px}
 .hd{position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid #2a3444;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
-.hd h1{font-size:16px;color:#e0a458}
-.hd span{font-size:10px;color:#9aa3b2}
-.sec{margin:8px;background:#151b24;border:1px solid #2a3444;border-radius:10px}
-.sh{padding:8px 12px;background:#1c2430;border-bottom:1px solid #2a3444;font-weight:600;font-size:13px}
+.hd h1{font-size:15px;color:#e0a458}
+.hd .sub{font-size:10px;color:#9aa3b2}
+.sec{margin:8px;background:#151b24;border:1px solid #2a3444;border-radius:10px;overflow:hidden}
+.sh{padding:8px 12px;background:#1c2430;border-bottom:1px solid #2a3444;font-weight:600;font-size:13px;display:flex;justify-content:space-between;align-items:center}
 .sb{padding:8px 12px}
 .row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;align-items:center}
 .btn{background:#1c2430;border:1px solid #2a3444;color:#e8eaed;border-radius:8px;padding:8px 12px;font-size:13px;min-height:40px}
 .btn.on{border-color:#e0a458;color:#e0a458}
-.btn.pri{background:#e0a458;border:none;color:#1a1208;font-weight:700}
+.btn.pri{background:#e0a458;border:none;color:#1a1208;font-weight:700;font-size:15px}
 .btn.ok{border-color:#3dd68c;color:#3dd68c}
+.btn.sm{min-height:32px;padding:4px 10px;font-size:12px}
 .pad{display:flex;flex-wrap:wrap;gap:5px}
 .ball{width:26px;height:26px;border-radius:50%;border:1px solid #2a3444;background:#0b0f14;color:#e8eaed;font-size:11px;text-align:center;line-height:26px}
 .ball.on{background:#e85d5d;border-color:#e85d5d;color:#fff;font-weight:700}
 .ball.blu.on{background:#4a9eff;border-color:#4a9eff}
 .ball.kill{background:#3a2020;border-color:#e85d5d;color:#e85d5d;text-decoration:line-through}
 .ball.dan{background:#1a3a2a;border-color:#3dd68c;color:#3dd68c;font-weight:700}
-.hint{font-size:11px;color:#9aa3b2;margin-top:4px}
+.hint{font-size:11px;color:#9aa3b2;margin:4px 0;line-height:1.45}
 .ft{position:fixed;bottom:0;left:0;right:0;background:#0b0f14;border-top:1px solid #2a3444;padding:8px 10px;z-index:50}
-.ft .btn{width:100%;min-height:44px;font-size:15px}
-.log{font-size:11px;max-height:120px;overflow:auto;background:#0b0f14;padding:6px;border:1px solid #2a3444;border-radius:6px;margin-top:6px;white-space:pre-wrap}
-input[type=number]{width:48px;background:#0b0f14;border:1px solid #2a3444;color:#e8eaed;border-radius:5px;padding:5px;font-size:13px}
-label{font-size:12px;color:#9aa3b2}
-.tog{display:inline-flex;align-items:center;gap:3px;margin-right:8px;font-size:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}
+.ft .btn{width:100%;min-height:44px}
+.log{font-size:11px;max-height:110px;overflow:auto;background:#0b0f14;padding:6px;border:1px solid #2a3444;border-radius:6px;margin-top:6px;white-space:pre-wrap}
+.cond{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:5px 0;padding-bottom:5px;border-bottom:1px dashed #2a3444}
+.nm{font-size:12px;color:#9aa3b2;min-width:56px}
+.step{display:inline-flex;align-items:center;border:1px solid #2a3444;border-radius:6px;overflow:hidden}
+.step button{width:30px;height:30px;border:none;background:#1c2430;color:#e0a458;font-size:16px;font-weight:700}
+.step span{min-width:26px;text-align:center;font-size:13px;background:#0b0f14;padding:0 2px}
+.help{display:none;background:#0f141c;padding:8px;border-radius:6px;margin:6px 0;font-size:11px;color:#9aa3b2;line-height:1.5}
+.help.show{display:block}
+.link{color:#e0a458;font-size:12px;border:none;background:none}
 </style>
 </head>
 <body>
 <div class="hd">
-  <div><h1>双色球缩水 V3.4</h1><span>完整条件 · 多轮投注集 · 本地</span></div>
-  <button class="btn" type="button" id="btnReset">重置</button>
+  <div><h1>双色球缩水 V3.4</h1><div class="sub">只缩减注数 · 不预测 · 本地</div></div>
+  <div><button class="btn sm" type="button" id="btnHelp">说明</button> <button class="btn sm" type="button" id="btnReset">重置</button></div>
 </div>
+<div class="sec" id="helpBox" style="display:none"><div class="sh">使用说明</div><div class="sb hint">
+<b>选号</b>：先点候选/杀号/胆码，再点红球。蓝球可多选标记。<br>
+<b>条件</b>：勾选启用，点 −/+ 调区间。未勾选不生效。<br>
+<b>过滤</b>：至少6个候选后点「开始过滤」。<br>
+<b>多轮</b>：过滤后点「用本轮投注集」，下轮用通过组合继续缩。<br>
+<b>声明</b>：只减少注数，不提高单注中奖概率，不预测下期。
+</div></div>
 <div class="sec"><div class="sh">红球 · 候选/杀号/胆码</div><div class="sb">
-<div class="row"><button class="btn on" type="button" id="mPool">候选</button><button class="btn" type="button" id="mKill">杀号</button><button class="btn" type="button" id="mDan">胆码</button><button class="btn" type="button" id="clrRed">清空</button></div>
-<div class="pad" id="redPad"></div><div class="hint" id="redHint">点号码切换</div></div></div>
+<div class="row"><button class="btn on sm" type="button" id="mPool">候选</button><button class="btn sm" type="button" id="mKill">杀号</button><button class="btn sm" type="button" id="mDan">胆码</button><button class="btn sm" type="button" id="clrRed">清空</button></div>
+<div class="pad" id="redPad"></div><div class="hint" id="redHint">点模式再点号码</div></div></div>
 <div class="sec"><div class="sh">蓝球</div><div class="sb"><div class="pad" id="bluePad"></div></div></div>
-<div class="sec"><div class="sh">经典结构</div><div class="sb">
-<div class="row"><span class="tog"><input type="checkbox" id="enSum" checked>和值</span><input type="number" id="sumMin" value="60">~<input type="number" id="sumMax" value="140"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enSpan" checked>跨度</span><input type="number" id="spanMin" value="10">~<input type="number" id="spanMax" value="32"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enOdd" checked>奇数</span><input type="number" id="oddMin" value="1">~<input type="number" id="oddMax" value="5"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enBig" checked>大号≥17</span><input type="number" id="bigMin" value="1">~<input type="number" id="bigMax" value="5"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enPrime">质数</span><input type="number" id="priMin" value="0">~<input type="number" id="priMax" value="6"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enAc">AC值</span><input type="number" id="acMin" value="4">~<input type="number" id="acMax" value="10"></div>
-<div class="row"><span class="tog"><input type="checkbox" id="enCon">连号组数</span><input type="number" id="conMin" value="0">~<input type="number" id="conMax" value="3"></div>
-</div></div>
-<div class="sec"><div class="sh">三区 / 四区 / 012路</div><div class="sb">
-<div class="row"><span class="tog"><input type="checkbox" id="enZ3">三区</span></div>
-<div class="grid2"><div>一区1-11 <input type="number" id="z3a0" value="0">~<input type="number" id="z3b0" value="4"></div><div>二区12-22 <input type="number" id="z3a1" value="0">~<input type="number" id="z3b1" value="4"></div><div>三区23-33 <input type="number" id="z3a2" value="0">~<input type="number" id="z3b2" value="4"></div></div>
-<div class="row" style="margin-top:8px"><span class="tog"><input type="checkbox" id="enZ4">四区</span></div>
-<div class="grid2"><div>1-8 <input type="number" id="z4a0" value="0">~<input type="number" id="z4b0" value="3"></div><div>9-16 <input type="number" id="z4a1" value="0">~<input type="number" id="z4b1" value="3"></div><div>17-24 <input type="number" id="z4a2" value="0">~<input type="number" id="z4b2" value="3"></div><div>25-33 <input type="number" id="z4a3" value="0">~<input type="number" id="z4b3" value="3"></div></div>
-<div class="row" style="margin-top:8px"><span class="tog"><input type="checkbox" id="enRoad">012路</span></div>
-<div class="grid2"><div>0路 <input type="number" id="r0a" value="0">~<input type="number" id="r0b" value="4"></div><div>1路 <input type="number" id="r1a" value="0">~<input type="number" id="r1b" value="4"></div><div>2路 <input type="number" id="r2a" value="0">~<input type="number" id="r2b" value="4"></div></div>
-</div></div>
-<div class="sec"><div class="sh">五行 / 边缘</div><div class="sb">
-<div class="row"><span class="tog"><input type="checkbox" id="enWx">五行(÷5余数)</span></div>
-<div class="hint">金余1 木余2 水余3 火余4 土余0</div>
-<div class="grid2"><div>金 <input type="number" id="wx0a" value="0">~<input type="number" id="wx0b" value="4"></div><div>木 <input type="number" id="wx1a" value="0">~<input type="number" id="wx1b" value="4"></div><div>水 <input type="number" id="wx2a" value="0">~<input type="number" id="wx2b" value="4"></div><div>火 <input type="number" id="wx3a" value="0">~<input type="number" id="wx3b" value="4"></div><div>土 <input type="number" id="wx4a" value="0">~<input type="number" id="wx4b" value="4"></div></div>
-<div class="row" style="margin-top:8px"><span class="tog"><input type="checkbox" id="enEdge">边缘号</span><input type="number" id="edgeMin" value="0">~<input type="number" id="edgeMax" value="4"></div>
-</div></div>
+<div class="sec"><div class="sh">条件（点−/+调值） <button class="link" type="button" id="btnTip">?</button></div>
+<div class="sb"><div class="help" id="tip">和值=红球之和；跨度=最大-最小；大号≥17；AC=两两差种数-5；连号组=连续段数；三区1-11/12-22/23-33；四区1-8/9-16/17-24/25-33；012路=÷3余数；五行=÷5余数(1金2木3水4火0土)；边缘=1-11与22-33。</div>
+<div id="conds"></div></div></div>
 <div class="sec"><div class="sh">多轮 · 本轮投注集</div><div class="sb">
-<div class="row"><button class="btn ok" type="button" id="btnUse">用本轮投注集</button><button class="btn" type="button" id="btnClrSt">清空轮次</button></div>
-<div class="hint">过滤后点此，下一轮用通过的组合继续滤</div>
+<div class="row"><button class="btn ok sm" type="button" id="btnUse">用本轮投注集</button><button class="btn sm" type="button" id="btnClrSt">清空轮次</button></div>
+<div class="hint">过滤后点此，下轮用通过组合作输入</div>
 <div class="log" id="stageLog">暂无轮次</div></div></div>
 <div class="sec"><div class="sh">结果</div><div class="sb"><div class="hint" id="sum">尚未过滤</div><div class="log" id="list"></div></div></div>
 <div class="ft"><button class="btn pri" type="button" id="btnRun">开始过滤</button></div>
@@ -77,13 +69,57 @@ label{font-size:12px;color:#9aa3b2}
 var mode='pool',reds={},kills={},dans={},blues={},last=[],stages=[],useCombos=false,MAX=25000;
 var PRIMES={2:1,3:1,5:1,7:1,11:1,13:1,17:1,19:1,23:1,29:1,31:1};
 var EDGE={1:1,2:1,3:1,4:1,5:1,6:1,7:1,8:1,9:1,10:1,11:1,22:1,23:1,24:1,25:1,26:1,27:1,28:1,29:1,30:1,31:1,32:1,33:1};
+var VALS={sumMin:60,sumMax:140,spanMin:10,spanMax:32,oddMin:1,oddMax:5,bigMin:1,bigMax:5,priMin:0,priMax:6,acMin:4,acMax:10,conMin:0,conMax:3,
+z3a0:0,z3b0:4,z3a1:0,z3b1:4,z3a2:0,z3b2:4,z4a0:0,z4b0:3,z4a1:0,z4b1:3,z4a2:0,z4b2:3,z4a3:0,z4b3:3,
+r0a:0,r0b:4,r1a:0,r1b:4,r2a:0,r2b:4,wx0a:0,wx0b:4,wx1a:0,wx1b:4,wx2a:0,wx2b:4,wx3a:0,wx3b:4,wx4a:0,wx4b:4,edgeMin:0,edgeMax:4};
+var EN={enSum:1,enSpan:1,enOdd:1,enBig:1,enPrime:0,enAc:0,enCon:0,enZ3:0,enZ4:0,enRoad:0,enWx:0,enEdge:0};
 function $(id){return document.getElementById(id)}
 function n2(n){return n<10?'0'+n:''+n}
 function has(o,n){return o[n]===1}
 function toggle(o,n){if(o[n])delete o[n];else o[n]=1}
 function keys(o){var a=[];for(var k in o)if(o.hasOwnProperty(k))a.push(+k);return a.sort(function(x,y){return x-y})}
 function count(o){var c=0;for(var k in o)if(o.hasOwnProperty(k))c++;return c}
-function v(id){return +$(id).value}
+function v(id){return VALS[id]}
+function step(k){return '<span class="step"><button type="button" data-t="'+k+'" data-d="-1">−</button><span id="'+k+'">'+VALS[k]+'</span><button type="button" data-t="'+k+'" data-d="1">+</button></span>'}
+function row(en,label,a,b){return '<div class="cond"><label><input type="checkbox" id="'+en+'"'+(EN[en]?' checked':'')+'>'+label+'</label> '+step(a)+' ~ '+step(b)+'</div>'}
+function buildConds(){
+  var h='';
+  h+=row('enSum','和值','sumMin','sumMax');
+  h+=row('enSpan','跨度','spanMin','spanMax');
+  h+=row('enOdd','奇数个','oddMin','oddMax');
+  h+=row('enBig','大号个','bigMin','bigMax');
+  h+=row('enPrime','质数个','priMin','priMax');
+  h+=row('enAc','AC值','acMin','acMax');
+  h+=row('enCon','连号组','conMin','conMax');
+  h+='<div class="hint">三区 1-11 / 12-22 / 23-33</div>';
+  h+='<div class="cond"><label><input type="checkbox" id="enZ3">三区</label></div>';
+  h+='<div class="cond"><span class="nm">一区</span>'+step('z3a0')+'~'+step('z3b0')+'</div>';
+  h+='<div class="cond"><span class="nm">二区</span>'+step('z3a1')+'~'+step('z3b1')+'</div>';
+  h+='<div class="cond"><span class="nm">三区</span>'+step('z3a2')+'~'+step('z3b2')+'</div>';
+  h+='<div class="hint">四区 1-8 / 9-16 / 17-24 / 25-33</div>';
+  h+='<div class="cond"><label><input type="checkbox" id="enZ4">四区</label></div>';
+  h+='<div class="cond"><span class="nm">1-8</span>'+step('z4a0')+'~'+step('z4b0')+'</div>';
+  h+='<div class="cond"><span class="nm">9-16</span>'+step('z4a1')+'~'+step('z4b1')+'</div>';
+  h+='<div class="cond"><span class="nm">17-24</span>'+step('z4a2')+'~'+step('z4b2')+'</div>';
+  h+='<div class="cond"><span class="nm">25-33</span>'+step('z4a3')+'~'+step('z4b3')+'</div>';
+  h+='<div class="cond"><label><input type="checkbox" id="enRoad">012路</label></div>';
+  h+='<div class="cond"><span class="nm">0路</span>'+step('r0a')+'~'+step('r0b')+'</div>';
+  h+='<div class="cond"><span class="nm">1路</span>'+step('r1a')+'~'+step('r1b')+'</div>';
+  h+='<div class="cond"><span class="nm">2路</span>'+step('r2a')+'~'+step('r2b')+'</div>';
+  h+='<div class="hint">五行 ÷5余数</div>';
+  h+='<div class="cond"><label><input type="checkbox" id="enWx">五行</label></div>';
+  h+='<div class="cond"><span class="nm">金</span>'+step('wx0a')+'~'+step('wx0b')+'</div>';
+  h+='<div class="cond"><span class="nm">木</span>'+step('wx1a')+'~'+step('wx1b')+'</div>';
+  h+='<div class="cond"><span class="nm">水</span>'+step('wx2a')+'~'+step('wx2b')+'</div>';
+  h+='<div class="cond"><span class="nm">火</span>'+step('wx3a')+'~'+step('wx3b')+'</div>';
+  h+='<div class="cond"><span class="nm">土</span>'+step('wx4a')+'~'+step('wx4b')+'</div>';
+  h+=row('enEdge','边缘个','edgeMin','edgeMax');
+  $('conds').innerHTML=h;
+}
+document.body.onclick=function(e){
+  var t=e.target,d=t.getAttribute('data-d'),k=t.getAttribute('data-t');
+  if(d!==null&&k){var n=VALS[k]+(+d);if(n<0)n=0;if(n>33)n=33;VALS[k]=n;if($(k))$(k).innerHTML=n}
+};
 function render(){
   var rp=$('redPad');rp.innerHTML='';
   for(var i=1;i<=33;i++){
@@ -99,21 +135,19 @@ function render(){
   }
   $('redHint').innerHTML='候选'+count(reds)+' 杀'+count(kills)+' 胆'+count(dans)+(useCombos?' [投注集]':'');
 }
-function onRed(n){
-  if(mode==='kill'){toggle(kills,n);delete reds[n];delete dans[n]}
-  else if(mode==='dan'){toggle(dans,n);delete kills[n];delete reds[n]}
-  else{toggle(reds,n);delete kills[n];delete dans[n]}
-  render();
-}
+function onRed(n){if(mode==='kill'){toggle(kills,n);delete reds[n];delete dans[n]}else if(mode==='dan'){toggle(dans,n);delete kills[n];delete reds[n]}else{toggle(reds,n);delete kills[n];delete dans[n]}render()}
 function onBlue(n){toggle(blues,n);render()}
-function setMode(m){mode=m;$('mPool').className=m==='pool'?'btn on':'btn';$('mKill').className=m==='kill'?'btn on':'btn';$('mDan').className=m==='dan'?'btn on':'btn'}
+function setMode(m){mode=m;$('mPool').className=m==='pool'?'btn on sm':'btn sm';$('mKill').className=m==='kill'?'btn on sm':'btn sm';$('mDan').className=m==='dan'?'btn on sm':'btn sm'}
 $('mPool').onclick=function(){setMode('pool')};$('mKill').onclick=function(){setMode('kill')};$('mDan').onclick=function(){setMode('dan')};
 $('clrRed').onclick=function(){reds={};kills={};dans={};render()};
 $('btnReset').onclick=function(){reds={};kills={};dans={};blues={};last=[];stages=[];useCombos=false;render();$('stageLog').innerHTML='暂无轮次';$('sum').innerHTML='尚未过滤';$('list').innerHTML=''};
+$('btnHelp').onclick=function(){var b=$('helpBox');b.style.display=b.style.display==='none'?'block':'none'};
+$('btnTip').onclick=function(){var t=$('tip');t.className=t.className.indexOf('show')>=0?'help':'help show'};
 function comb(arr,k){var out=[];function rec(s,p){if(p.length===k){out.push(p.slice());return}for(var i=s;i<arr.length;i++){p.push(arr[i]);rec(i+1,p);p.pop()}}rec(0,[]);return out}
-function acValue(c){var s={},i,j,d;for(i=0;i<6;i++)for(j=i+1;j<6;j++){d=c[j]-c[i];s[d]=1}var n=0;for(var k in s)n++;return n-5}
+function acValue(c){var s={},i,j;for(i=0;i<6;i++)for(j=i+1;j<6;j++)s[c[j]-c[i]]=1;var n=0;for(var k in s)n++;return n-5}
 function conGroups(c){var g=0,i;for(i=1;i<6;i++)if(c[i]===c[i-1]+1){if(i===1||c[i-1]!==c[i-2]+1)g++}return g}
 function inRange(x,a,b){return x>=a&&x<=b}
+function chk(id){var e=$(id);return e&&e.checked}
 function okCombo(c){
   var sum=0,mn=99,mx=0,odd=0,big=0,pri=0,edge=0,i,x;
   var z3=[0,0,0],z4=[0,0,0,0],rd=[0,0,0],wx=[0,0,0,0,0];
@@ -125,18 +159,18 @@ function okCombo(c){
     rd[x%3]++;wx[x%5]++;
   }
   var span=mx-mn;
-  if($('enSum').checked&&!inRange(sum,v('sumMin'),v('sumMax')))return false;
-  if($('enSpan').checked&&!inRange(span,v('spanMin'),v('spanMax')))return false;
-  if($('enOdd').checked&&!inRange(odd,v('oddMin'),v('oddMax')))return false;
-  if($('enBig').checked&&!inRange(big,v('bigMin'),v('bigMax')))return false;
-  if($('enPrime').checked&&!inRange(pri,v('priMin'),v('priMax')))return false;
-  if($('enAc').checked&&!inRange(acValue(c),v('acMin'),v('acMax')))return false;
-  if($('enCon').checked&&!inRange(conGroups(c),v('conMin'),v('conMax')))return false;
-  if($('enZ3').checked){for(i=0;i<3;i++)if(!inRange(z3[i],v('z3a'+i),v('z3b'+i)))return false}
-  if($('enZ4').checked){for(i=0;i<4;i++)if(!inRange(z4[i],v('z4a'+i),v('z4b'+i)))return false}
-  if($('enRoad').checked){if(!inRange(rd[0],v('r0a'),v('r0b')))return false;if(!inRange(rd[1],v('r1a'),v('r1b')))return false;if(!inRange(rd[2],v('r2a'),v('r2b')))return false}
-  if($('enWx').checked){for(i=0;i<5;i++)if(!inRange(wx[i],v('wx'+i+'a'),v('wx'+i+'b')))return false}
-  if($('enEdge').checked&&!inRange(edge,v('edgeMin'),v('edgeMax')))return false;
+  if(chk('enSum')&&!inRange(sum,v('sumMin'),v('sumMax')))return false;
+  if(chk('enSpan')&&!inRange(span,v('spanMin'),v('spanMax')))return false;
+  if(chk('enOdd')&&!inRange(odd,v('oddMin'),v('oddMax')))return false;
+  if(chk('enBig')&&!inRange(big,v('bigMin'),v('bigMax')))return false;
+  if(chk('enPrime')&&!inRange(pri,v('priMin'),v('priMax')))return false;
+  if(chk('enAc')&&!inRange(acValue(c),v('acMin'),v('acMax')))return false;
+  if(chk('enCon')&&!inRange(conGroups(c),v('conMin'),v('conMax')))return false;
+  if(chk('enZ3')){for(i=0;i<3;i++)if(!inRange(z3[i],v('z3a'+i),v('z3b'+i)))return false}
+  if(chk('enZ4')){for(i=0;i<4;i++)if(!inRange(z4[i],v('z4a'+i),v('z4b'+i)))return false}
+  if(chk('enRoad')){if(!inRange(rd[0],v('r0a'),v('r0b')))return false;if(!inRange(rd[1],v('r1a'),v('r1b')))return false;if(!inRange(rd[2],v('r2a'),v('r2b')))return false}
+  if(chk('enWx')){for(i=0;i<5;i++)if(!inRange(wx[i],v('wx'+i+'a'),v('wx'+i+'b')))return false}
+  if(chk('enEdge')&&!inRange(edge,v('edgeMin'),v('edgeMax')))return false;
   for(i=0;i<6;i++)if(has(kills,c[i]))return false;
   var dk=keys(dans);for(i=0;i<dk.length;i++)if(c.indexOf(dk[i])<0)return false;
   return true;
@@ -154,7 +188,7 @@ $('btnRun').onclick=function(){
 };
 $('btnUse').onclick=function(){if(!last.length){alert('请先过滤');return}useCombos=true;alert('已用本轮投注集 '+last.length+' 注');render()};
 $('btnClrSt').onclick=function(){stages=[];last=[];useCombos=false;$('stageLog').innerHTML='暂无轮次';render()};
-render();
+buildConds();render();
 </script>
 </body>
 </html>
